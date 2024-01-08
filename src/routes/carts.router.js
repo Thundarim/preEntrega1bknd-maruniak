@@ -13,7 +13,7 @@ router.get("/carts", async (req, res) => {
         res.status(500).json({ error: "Error interno del servidor" });
     }
 });
-
+//mostrar carritos
 router.post("/carts", async (req, res) => {
     try {
         const newCart = req.body;
@@ -47,7 +47,7 @@ router.post("/carts", async (req, res) => {
     }
 });
 
-
+//obtener carritos por id
 router.get("/carts/:cid", async (req, res) => {
     try {
         const cartId = req.params.cid;
@@ -63,7 +63,7 @@ router.get("/carts/:cid", async (req, res) => {
     }
 });
 
-
+//añadir un producto al carrito
 router.post("/carts/:cid/products/:pid", async (req, res) => {
     try {
         const cartId = req.params.cid;
@@ -78,7 +78,7 @@ router.post("/carts/:cid/products/:pid", async (req, res) => {
     }
 });
 
-
+//funcion para validar que el carrito añadido sea correcto
 function isValidCart(cart) {
     return (
         cart &&

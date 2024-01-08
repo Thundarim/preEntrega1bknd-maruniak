@@ -12,7 +12,7 @@
     "id": 2,
     "title": "Smartphone",
     "description": "Último smartphone con increíbles funciones",
-    "price": 800,
+    "price": 8000,
     "thumbnail": "https://ejemplo.com/smartphone.jpg",
     "code": "xyz002",
     "stock": 15
@@ -88,23 +88,5 @@
     "thumbnail": "https://ejemplo.com/teclado-inalambrico.jpg",
     "code": "xyz010",
     "stock": 15
-  },
-  {
-    "id": 1,
-    "title": "choclo",
-    "description": "un choclo",
-    "price": 150,
-    "thumbnail": "Sin imagen",
-    "code": "abc123",
-    "stock": 30
-  },
-  {
-    "id": 11,
-    "title": "choclo maximus",
-    "description": "un choclo pero maximo",
-    "price": 150,
-    "thumbnail": "Sin imagen",
-    "code": "abc123",
-    "stock": 30
   }
 ]
