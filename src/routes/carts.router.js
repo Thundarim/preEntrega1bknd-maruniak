@@ -20,11 +20,25 @@ router.post("/carts", async (req, res) => {
         if (!isValidCart(newCart)) {
             return res.status(400).json({ error: "Datos de carrito no válidos" });
         }
-        newCart.id = generateCartId();
 
         const carts = await cartManager.getCarts();
+        const existingCartIndex = carts.findIndex(item => item.id === newCart.id);
 
-        carts.push(newCart);
+        if (existingCartIndex !== -1) {
+            const existingCart = carts[existingCartIndex];
+            newCart.products.forEach(newProduct => {
+                const existingProductIndex = existingCart.products.findIndex(existingProduct => existingProduct.id === newProduct.id);
+                if (existingProductIndex !== -1) {
+                    existingCart.products[existingProductIndex].quantity += newProduct.quantity;
+                } else {
+                    existingCart.products.push(newProduct);
+                }
+            });
+        } else {
+            newCart.id = generateCartId();
+            carts.push(newCart);
+        }
+
         await fs.writeFile("./src/models/carts.json", JSON.stringify(carts, null, 2), "utf-8");
         res.json(newCart);
     } catch (error) {
@@ -32,6 +46,7 @@ router.post("/carts", async (req, res) => {
         res.status(500).json({ error: "Error interno del servidor" });
     }
 });
+
 
 router.get("/carts/:cid", async (req, res) => {
     try {
@@ -49,10 +64,10 @@ router.get("/carts/:cid", async (req, res) => {
 });
 
 
-router.post("/carts/:cid/product/:pid", async (req, res) => {
+router.post("/carts/:cid/products/:pid", async (req, res) => {
     try {
         const cartId = req.params.cid;
-        const productId = req.params.pid;
+        const productId = parseInt(req.params.pid);
         const quantity = req.body.quantity || 1;
         const updatedCart = await cartManager.addProductToCart(cartId, productId, quantity);
 
@@ -62,6 +77,7 @@ router.post("/carts/:cid/product/:pid", async (req, res) => {
         res.status(500).json({ error: "Error interno del servidor" });
     }
 });
+
 
 function isValidCart(cart) {
     return (
