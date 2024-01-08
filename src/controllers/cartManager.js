@@ -12,10 +12,7 @@ class CartManager {
 
     async getCartById(id) {
         const arrayCarritos = await this.getCarts();
-        console.log("Received ID:", id);
-        console.log("All Carts:", arrayCarritos);
         const buscado = arrayCarritos.find(item => item.id === id);
-        console.log("Found Cart:", buscado);
         return buscado;
     }
     async addProductToCart(cartId, productId, quantity) {
